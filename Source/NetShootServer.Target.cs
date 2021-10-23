@@ -1,62 +1,15 @@
-// Copyright 1998-2016 Epic Games, Inc. All Rights Reserved.
+// Fill out your copyright notice in the Description page of Project Settings.
 
 using UnrealBuildTool;
 using System.Collections.Generic;
 
 public class NetShootServerTarget : TargetRules
 {
-    public NetShootServerTarget(TargetInfo Target)
-    {
-        Type = TargetType.Server;
-        bUsesSteam = true;
-    }
+	public NetShootServerTarget(TargetInfo Target) : base(Target)
+	{
+		Type = TargetType.Server;
+		DefaultBuildSettings = BuildSettingsVersion.V2;
 
-    //
-    // TargetRules interface.
-    //
-
-    public override bool GetSupportedPlatforms(ref List<UnrealTargetPlatform> OutPlatforms)
-    {
-        // It is valid for only server platforms
-        return UnrealBuildTool.UnrealBuildTool.GetAllServerPlatforms(ref OutPlatforms, false);
-    }
-
-    public override void SetupBinaries(
-        TargetInfo Target,
-        ref List<UEBuildBinaryConfiguration> OutBuildBinaryConfigurations,
-        ref List<string> OutExtraModuleNames
-        )
-    {
-        OutExtraModuleNames.Add("NetShoot");
-    }
-    public override List<UnrealTargetPlatform> GUBP_GetPlatforms_MonolithicOnly(UnrealTargetPlatform HostPlatform)
-    {
-        List<UnrealTargetPlatform> Platforms = null;
-
-        switch (HostPlatform)
-        {
-            case UnrealTargetPlatform.Linux:
-                Platforms = new List<UnrealTargetPlatform> { HostPlatform };
-                break;
-
-            case UnrealTargetPlatform.Win64:
-                Platforms = new List<UnrealTargetPlatform> { HostPlatform, UnrealTargetPlatform.Linux };
-                break;
-
-            default:
-                Platforms = new List<UnrealTargetPlatform>();
-                break;
-        }
-
-        return Platforms;
-    }
-
-    public override List<UnrealTargetConfiguration> GUBP_GetConfigs_MonolithicOnly(UnrealTargetPlatform HostPlatform, UnrealTargetPlatform Platform)
-    {
-        return new List<UnrealTargetConfiguration> { UnrealTargetConfiguration.Test };
-    }
-    public override List<GUBPFormalBuild> GUBP_GetConfigsForFormalBuilds_MonolithicOnly(UnrealTargetPlatform HostPlatform)
-    {
-        return new List<GUBPFormalBuild>();
-    }
+		ExtraModuleNames.AddRange( new string[] { "Netshoot" } );
+	}
 }
