@@ -15,28 +15,23 @@ class NETSHOOT_API URankListSaveGame : public USaveGame
 	GENERATED_BODY()
 	
 public:
-	TMap<FString, int32> RankMap;
 
+	UPROPERTY(VisibleAnywhere, Replicated, Category = Basic)
 	TArray<int32> RankListScore;
 
+	UPROPERTY(VisibleAnywhere, Replicated , Category = Basic)
 	TArray<FString> RankListName;
 
-	UPROPERTY(VisibleAnywhere, Category = Basic)
-	bool NeedSort;
-public:
 	URankListSaveGame();
 
-	void SortRankList();
+	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps)const override;
 
 	UFUNCTION(BlueprintCallable)
-	TArray<int32>& GetRankListScore();
+	void UpdateDataByRankMap(const TMap<FString, int32>& RankMap);
 
 	UFUNCTION(BlueprintCallable)
-	TArray<FString>& GetRankListName();
+	const TArray<int32>& GetRankListScore()const;
 
 	UFUNCTION(BlueprintCallable)
-	void ChangePlayerName(const FString& PreName,const FString& NowName);
-
-	UFUNCTION(BlueprintCallable)
-	void ChangePlayerScore(const FString& PlayerName,int32 DeltaScore);
+	const TArray<FString>& GetRankListName()const;
 };
