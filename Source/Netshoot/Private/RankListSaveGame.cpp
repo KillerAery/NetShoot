@@ -1,43 +1,30 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
+#include <Net/UnrealNetwork.h>
 #include "RankListSaveGame.h"
 
 URankListSaveGame::URankListSaveGame() {
-
 }
 
-void URankListSaveGame::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+void URankListSaveGame::UpdateDataByRankMap(const TMap<FString, int32>& RankMap, TArray<int32>& RankScore, TArray<FString>& RankName)
 {
-	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+	RankScore.Empty();
+	RankName.Empty();
 
-}
-
-void URankListSaveGame::UpdateDataByRankMap(const TMap<FString, int32>& RankMap)
-{
-
-	RankListScore.Empty();
-	RankListName.Empty();
-
-	int32 index = 0;
 	for (auto& element : RankMap) {
-		RankListScore.Add(index);
-		RankListName.Add(element.Key);
-		++index;
+		RankScore.Add(0);
+		RankName.Add(element.Key);
 	}
 
-	RankListScore.Sort(
-		[this,&RankMap](int32 a, int32 b) {
-			if (RankMap[RankListName[a]] < RankMap[RankListName[b]]) {
-				Swap(RankListName[a], RankListName[b]);
-				return true;
-			}
-			return false;
+	RankName.Sort(
+		[&RankMap](const FString& a, const FString& b) {
+			return RankMap[a] > RankMap[b];
 		}
 	);
 
-	for (int32 i = 0; i < RankListScore.Num(); ++i) {
-		RankListScore[i] = RankMap[RankListName[i]];
+	for (int32 i = 0; i < RankScore.Num(); ++i) {
+		RankScore[i] = RankMap[RankName[i]];
 	}
 }
 
@@ -49,4 +36,14 @@ const TArray<int32>& URankListSaveGame::GetRankListScore() const
 const TArray<FString>& URankListSaveGame::GetRankListName() const
 {
 	return RankListName;
+}
+
+void URankListSaveGame::SetRankListScore(const TArray<int32>& RankScore)
+{
+	RankListScore = RankScore;
+}
+
+void URankListSaveGame::SetRankListName(const TArray<FString>& RankName)
+{
+	RankListName = RankName;
 }
