@@ -8,4 +8,6 @@ UE4 Homework6（动画部分：脚印、脚步声、炸弹PICK、装弹动作、
 
 UE4 Homework8（渲染部分：半透明材质、射击驱动帽子材质变换、炸弹轨迹下雨等粒子特效、后处理特效）
 
+UE4 Homework9（AI部分：行为树实现AI，普通突击兵AI：寻敌、移动、巡逻、开火）
+
 百度网盘链接：https://pan.baidu.com/s/1zo1LGfzOghEazbUQr4-dVg 提取码：pkea
